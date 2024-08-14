@@ -1,0 +1,27 @@
+from gtts import gTTS
+from playsound import playsound
+from pathlib import Path
+
+def teks_ke_suara(teks, direktori=r'C:\Users\LENOVO\Music', nama_file='output.mp3'):
+    # Membuat objek Path untuk direktori dan file
+    path_direktori = Path(direktori)
+    
+    # Membuat direktori jika belum ada
+    if not path_direktori.exists():
+        path_direktori.mkdir(parents=True, exist_ok=True)
+    
+    # Menyusun path file lengkap
+    path_file = path_direktori / nama_file
+    
+    # Mengonversi teks menjadi audio
+    tts = gTTS(text=teks, lang='id')  # 'id' untuk bahasa Indonesia
+    tts.save(path_file)  # Menyimpan audio ke file
+    print(f"File audio telah disimpan sebagai {path_file}")
+    
+    # Memutar file audio
+    playsound(str(path_file))
+
+if __name__ == "__main__":
+    teks = "Halo Pak Cahyo, anda adalah orang hebat"
+    direktori_penyimpanan = 'audio_files'  # Ganti dengan path direktori yang Anda inginkan
+    teks_ke_suara(teks, direktori=direktori_penyimpanan, nama_file='contoh_audio4.mp3')
