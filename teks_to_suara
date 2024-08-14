@@ -23,5 +23,6 @@ def teks_ke_suara(teks, direktori=r'C:\Users\LENOVO\Music', nama_file='output.mp
 
 if __name__ == "__main__":
     teks = "Halo Pak Cahyo, anda adalah orang hebat"
-    direktori_penyimpanan = 'audio_files'  # Ganti dengan path direktori yang Anda inginkan
-    teks_ke_suara(teks, direktori=direktori_penyimpanan, nama_file='contoh_audio4.mp3')
+    direktori_penyimpanan = r'C:\Users\LENOVO\Music'  # Ganti dengan path direktori yang Anda inginkan
+    teks_ke_suara(teks, direktori=direktori_penyimpanan, nama_file='contoh_audio6.mp3')
+
