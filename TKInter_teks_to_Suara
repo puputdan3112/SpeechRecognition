@@ -1,0 +1,64 @@
+import tkinter as tk
+from tkinter import filedialog, messagebox
+from gtts import gTTS
+from playsound import playsound
+from pathlib import Path
+
+def teks_ke_suara(teks, direktori, nama_file):
+    # Membuat objek Path untuk direktori dan file
+    path_direktori = Path(direktori)
+    
+    # Membuat direktori jika belum ada
+    if not path_direktori.exists():
+        path_direktori.mkdir(parents=True, exist_ok=True)
+    
+    # Menyusun path file lengkap
+    path_file = path_direktori / nama_file
+    
+    # Mengonversi teks menjadi audio
+    tts = gTTS(text=teks, lang='id')  # 'id' untuk bahasa Indonesia
+    tts.save(path_file)  # Menyimpan audio ke file
+    print(f"File audio telah disimpan sebagai {path_file}")
+    
+    # Memutar file audio
+    playsound(str(path_file))
+
+def pilih_direktori():
+    direktori = filedialog.askdirectory()
+    if direktori:
+        entry_direktori.delete(0, tk.END)
+        entry_direktori.insert(0, direktori)
+
+def konversi_teks():
+    teks = entry_teks.get()
+    direktori = entry_direktori.get()
+    nama_file = entry_nama_file.get()
+    
+    if teks and direktori and nama_file:
+        teks_ke_suara(teks, direktori, nama_file)
+        messagebox.showinfo("Informasi", "Konversi selesai dan audio telah diputar!")
+    else:
+        messagebox.showwarning("Peringatan", "Semua field harus diisi!")
+
+# Membuat jendela GUI
+root = tk.Tk()
+root.title("Teks ke Suara")
+
+# Membuat dan menempatkan widget
+tk.Label(root, text="Masukkan teks:").pack(padx=10, pady=5)
+entry_teks = tk.Entry(root, width=50)
+entry_teks.pack(padx=10, pady=5)
+
+tk.Label(root, text="Pilih direktori untuk menyimpan:").pack(padx=10, pady=5)
+entry_direktori = tk.Entry(root, width=50)
+entry_direktori.pack(padx=10, pady=5)
+tk.Button(root, text="Browse", command=pilih_direktori).pack(padx=10, pady=5)
+
+tk.Label(root, text="Nama file:").pack(padx=10, pady=5)
+entry_nama_file = tk.Entry(root, width=50)
+entry_nama_file.pack(padx=10, pady=5)
+
+tk.Button(root, text="Konversi ke Suara", command=konversi_teks).pack(padx=10, pady=10)
+
+# Menjalankan aplikasi
+root.mainloop()
